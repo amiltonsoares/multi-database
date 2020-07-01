@@ -15,7 +15,7 @@ class TenantCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private $tenant;
+    protected $tenant;
 
     /**
      * Create a new event instance.

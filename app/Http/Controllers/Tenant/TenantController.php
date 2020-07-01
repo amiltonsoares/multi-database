@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenant\StoreUpdateTenantFormRequest;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
+use stdClass;
 
 class TenantController extends Controller
 {
@@ -37,7 +38,12 @@ class TenantController extends Controller
      */
     public function create()
     {
-        return view('tenants.create');
+        $tenant = new stdClass();
+        $tenant->db_hostname = env('DB_HOST', '');
+        $tenant->db_username = env('DB_USERNAME', '');
+        $tenant->db_password = env('DB_PASSWORD', '');
+        // dd($tenant);
+        return view('tenants.create', ['tenant' => $tenant]);
     }
 
     /**

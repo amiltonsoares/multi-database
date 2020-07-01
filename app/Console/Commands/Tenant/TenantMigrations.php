@@ -14,7 +14,7 @@ class TenantMigrations extends Command
      *
      * @var string
      */
-    protected $signature = 'tenants:migrations {id?} {--refresh}';
+    protected $signature = 'tenants:migrations {id?} {--refresh} {--fresh} {--seed}';
 
     /**
      * The console command description.
@@ -63,15 +63,22 @@ class TenantMigrations extends Command
     {
         $this->info("Connecting Tenant {$tenant->name}");
         $this->tenantManager->setConnection($tenant);
-        $command = $this->option('refresh') ? 'migrate:refresh' : 'migrate';
+
+        $command = 'migrate';
+        if ($this->option('refresh'))
+            $command =  'migrate:refresh';
+        if ($this->option('fresh'))
+            $command =  'migrate:fresh';
         $run = Artisan::call($command, [
             '--force' => true,
             '--path' => '/database/migrations/tenants',
         ]);
         if ($run === 0) {
+            if ($this->option('refresh') || $this->option('fresh') || $this->option('seed')) {
             Artisan::call('db:seed', [
                 '--class' => 'TenantUserSeeder',
             ]);
+            }
             $this->info("Success Tenant {$tenant->name}");
         }
         $this->info("End Connecting Tenant {$tenant->name}");

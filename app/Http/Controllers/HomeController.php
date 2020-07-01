@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tenants\TenantManager;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        $tenantManager = app(TenantManager::class);
+
+        if ($tenantManager->isMainDomain())
+            return redirect()->route('tenant.index');
+        else
+            return view('home');
     }
 }

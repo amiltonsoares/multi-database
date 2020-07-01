@@ -15,7 +15,15 @@ class TenantUserSeeder extends Seeder
         User::create([
             'name'      => 'Suporte',
             'email'     => 'suporte@inovesistemas.com.br',
-            'password'  => bcrypt('12345678'),
+            'password'  => bcrypt('123'),
         ]);
+        if (env('APP_DEMO', false)) {
+            User::create([
+                'name'      => 'Demonstração',
+                'email'     => 'demo@inovesistemas.com.br',
+                'password'  => bcrypt('123'),
+            ]);
+            $this->call(ContactSeeder::class);
+        }
     }
 }

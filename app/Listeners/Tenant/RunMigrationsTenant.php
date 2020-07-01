@@ -30,6 +30,7 @@ class RunMigrationsTenant
         $tenant = $event->tenant();
         $run = Artisan::call('tenants:migrations', [
             'id' => $tenant->id,
+            '--seed' => true,
         ]);
         return $run === 0;
     }

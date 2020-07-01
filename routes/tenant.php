@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->route('tenant.index');
 });
-Route::get('tenant/', 'Tenant\\TenantController@index')->name('tenant.index');
+Route::get('tenant', 'Tenant\\TenantController@index')->name('tenant.index');
 Route::get('tenant/create', 'Tenant\TenantController@create')->name('tenant.create');
 Route::post('tenant', 'Tenant\TenantController@store')->name('tenant.store');
 Route::get('tenant/{domain}', 'Tenant\TenantController@show')->name('tenant.show');

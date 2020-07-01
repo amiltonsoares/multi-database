@@ -31,6 +31,6 @@ class TenantManager
 
     public function isMainDomain()
     {
-        return request()->getHost() == config('tenant.main_domain');
+        return (request()->getHost() == config('tenant.main_domain'));
     }
 }
